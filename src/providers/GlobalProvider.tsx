@@ -31,6 +31,14 @@ export const GlobalProvider: React.FC<PropsWithChildren> = ({ children }) => {
                 background: p.background,
                 color: p.textPrimary,
               },
+              "#nprogress .bar": {
+                background: `${p.primary} !important`,
+              },
+
+              "#nprogress .spinner-icon": {
+                borderTopColor: p.primary,
+                borderLeftColor: p.primary,
+              },
             })}
           />
           {children}
