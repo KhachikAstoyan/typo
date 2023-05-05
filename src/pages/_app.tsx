@@ -7,9 +7,20 @@ import { GlobalProvider } from "@/providers/GlobalProvider";
 import Router from "next/router";
 import "nprogress/nprogress.css";
 
-Router.events.on("routeChangeStart", () => NProgress.start());
-Router.events.on("routeChangeComplete", () => NProgress.done());
-Router.events.on("routeChangeError", () => NProgress.done());
+let progressInterval: NodeJS.Timeout;
+
+Router.events.on(
+  "routeChangeStart",
+  () => (progressInterval = setInterval(NProgress.start, 200))
+);
+Router.events.on("routeChangeComplete", () => {
+  clearInterval(progressInterval);
+  NProgress.done();
+});
+Router.events.on("routeChangeError", () => {
+  clearInterval(progressInterval);
+  NProgress.done();
+});
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

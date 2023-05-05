@@ -28,8 +28,6 @@ export async function addTest(id: string, testResult: CreateTest) {
   const user = await prisma.user.findUnique({ where: { id } });
 
   if (!user) throw createHttpError.Unauthorized();
-
-  console.log({ testResult });
   await createTestSchema.parseAsync(testResult);
   const test = await prisma.test.create({
     data: {

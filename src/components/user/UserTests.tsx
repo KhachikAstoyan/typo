@@ -29,32 +29,15 @@ interface Props {
 
 const fetchTests = async (page: number, id: string): Promise<TestResponse> => {
   const { data } = await axios.get(`/api/users/tests/${id}?page=${page}`);
-
-  console.log(data);
-
   return data.tests as TestResponse;
 };
 
 const UserTests: React.FC<Props> = ({ user }) => {
   const [page, setPage] = useState(1);
-  // const { data: tests, isLoading } = useQuery(
-  //   ["tests", page],
-  //   () =>
-  //     axios
-  //       .get<TestResponse>(`/api/users/tests/${user.id}?page=${page}`)
-  //       .then((r) => {
-  //         return r.data;
-  //       }),
-  //   { keepPreviousData: true }
-  // );
 
   const { data: tests, isLoading } = useQuery(["tests", page], () =>
     fetchTests(page, user.id)
   );
-
-  useEffect(() => {
-    console.log(tests);
-  });
 
   if (isLoading || !tests) {
     return (

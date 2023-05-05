@@ -49,7 +49,6 @@ const TypingTest = () => {
         onFocus={() => {
           if (!isOver) {
             // inputRef.current?.focus();
-            console.log("IM FOCUSING");
             setIsFocused(true);
           }
         }}
@@ -65,7 +64,6 @@ const TypingTest = () => {
 						className="absolute opacity-0"
 						onKeyDown={(e) => {
 							e.preventDefault();
-							console.log(e.key);
 						}}
 					/> */}
           {!isFocused && !isOver && (

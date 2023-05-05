@@ -117,27 +117,21 @@ export const useTest = () => {
     };
 
     if (!isRunning && timeElapsed !== 0) {
-      console.log(result);
-      // api.post("/tests", result).then((r) => console.log(r.data));
-      axios.post("/api/tests/add", result).then((r) => {
-        if (r.status >= 200 && r.status < 300) {
-          toast.success("Test saved!", {
-            style: {
-              background: theme.bgSecondary,
-              color: theme.textSecondary,
-            },
-            position: "bottom-right",
-          });
-        } else {
-          toast.error("Error saving test", {
-            position: "bottom-right",
-            style: {
-              background: theme.bgSecondary,
-              color: theme.textSecondary,
-            },
-          });
+      toast.promise(
+        axios.post("/api/tests/add", result),
+        {
+          loading: "Saving test...",
+          success: "Test saved!",
+          error: "Error saving test",
+        },
+        {
+          style: {
+            background: theme.bgSecondary,
+            color: theme.textSecondary,
+          },
+          position: "bottom-right",
         }
-      });
+      );
     }
   }, [isRunning]);
 
