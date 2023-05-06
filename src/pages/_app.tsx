@@ -11,7 +11,7 @@ let progressInterval: NodeJS.Timeout;
 
 Router.events.on(
   "routeChangeStart",
-  () => (progressInterval = setInterval(NProgress.start, 200))
+  () => (progressInterval = setInterval(NProgress.start, 300))
 );
 Router.events.on("routeChangeComplete", () => {
   clearInterval(progressInterval);

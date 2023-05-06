@@ -128,6 +128,7 @@ export const useTest = () => {
           style: {
             background: theme.bgSecondary,
             color: theme.textSecondary,
+            boxShadow: "0 0 1px " + theme.textSecondary,
           },
           position: "bottom-right",
         }
