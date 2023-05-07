@@ -32,7 +32,7 @@ const fetchTests = async (page: number, id: string): Promise<TestResponse> => {
   return data.tests as TestResponse;
 };
 
-const UserTests: React.FC<Props> = ({ user }) => {
+export const UserTests: React.FC<Props> = ({ user }) => {
   const [page, setPage] = useState(1);
 
   const { data: tests, isLoading } = useQuery(["tests", page], () =>
@@ -84,5 +84,3 @@ const UserTests: React.FC<Props> = ({ user }) => {
     </>
   );
 };
-
-export default UserTests;

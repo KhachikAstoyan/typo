@@ -1,25 +1,38 @@
-import React, { useEffect } from "react";
-import type { GetServerSideProps, NextPage } from "next";
-import { prisma } from "@/server/db";
+import React from "react";
+import type { NextPage } from "next";
 import { User } from "@prisma/client";
 import { MainLayout } from "@/layouts/Main";
 import { Center } from "@/components/common/Center";
 import { UserInfo } from "@/components/user/UserInfo";
-import { UserStats as Stats, UserStats } from "@/components/user/UserStats";
-import axios from "axios";
+import { UserStats } from "@/components/user/UserStats";
 import { useQuery } from "react-query";
-import UserTests from "../../components/user/UserTests";
+import { UserTests } from "@/components/user/UserTests";
 import { Button } from "@mantine/core";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { Spinner } from "@/components/common/Spinner";
+import axios from "axios";
 
-interface Props {
-  user: User | null;
-}
-
-const Profile: NextPage<Props> = ({ user }) => {
+const Profile: NextPage = () => {
   const router = useRouter();
-  if (!user) {
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useQuery<User>(`user-${router.query.id}`, () =>
+    axios.get(`/api/users/${router.query.id}`).then((r) => r.data)
+  );
+  const { data: session } = useSession();
+
+  if (isLoading) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
+  if (!user || isError) {
     return (
       <MainLayout>
         <Center>
@@ -36,57 +49,27 @@ const Profile: NextPage<Props> = ({ user }) => {
         <UserStats user={user} />
         <div className="mt-10">
           <UserTests user={user} />
-          <Button
-            color="red"
-            variant="outline"
-            size="sm"
-            className="float-right"
-            onClick={() =>
-              signOut().then(() => {
-                if (window) {
-                  window.location.href = "/";
-                }
-              })
-            }
-          >
-            Logout
-          </Button>
+          {session?.user.id === router.query.id && (
+            <Button
+              color="red"
+              variant="outline"
+              size="sm"
+              className="float-right"
+              onClick={() =>
+                signOut().then(() => {
+                  if (window) {
+                    window.location.href = "/";
+                  }
+                })
+              }
+            >
+              Logout
+            </Button>
+          )}
         </div>
       </div>
     </MainLayout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context
-) => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: (context.params?.id as string) || "",
-      },
-    });
-
-    if (!user) {
-      return {
-        props: {
-          user: null,
-        },
-      };
-    }
-
-    return {
-      props: {
-        user,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        user: null,
-      },
-    };
-  }
 };
 
 export default Profile;

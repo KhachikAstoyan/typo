@@ -18,7 +18,9 @@ export const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           </Badge>
         )}
         <h1 className="text-3xl font-bold md:text-5xl">{user.name}</h1>
-        <h2 className="text-md text-gray-500 md:text-lg">{user.email}</h2>
+        <h2 className="text-md text-gray-500 md:text-lg">
+          {!!user.email && user.email}
+        </h2>
       </div>
     </div>
   );
