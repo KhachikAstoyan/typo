@@ -4,7 +4,7 @@ import CharRenderer from "./CharRenderer";
 import RealtimeStats from "./RealtimeStats";
 import TestResults from "./TestResults";
 import { useHotkeys } from "react-hotkeys-hook";
-import { useTest } from "../../hooks/useTest";
+import { useTest } from "@/hooks/useTest";
 import { Kbd } from "@mantine/core";
 
 const TypingTest = () => {

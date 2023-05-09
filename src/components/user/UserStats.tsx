@@ -5,6 +5,7 @@ import axios from "axios";
 import { User } from "@prisma/client";
 import { useTheme } from "@emotion/react";
 import { Center } from "@mantine/core";
+import { fetchStats } from "@/utils/api";
 
 interface UserStatsProps {
   user: User;
@@ -15,14 +16,16 @@ export const UserStats: React.FC<UserStatsProps> = ({ user }) => {
     data: stats,
     isLoading,
     isError,
-  } = useQuery("userStats", () => axios.get(`/api/users/stats/${user.id}`));
+  } = useQuery([`userStats`, user.id], fetchStats(user.id));
 
   if (isLoading) {
     return (
       <>
-        <StatSkeleton />
-        <StatSkeleton />
-        <StatSkeleton />
+        <div className="flex flex-row gap-5">
+          <StatSkeleton />
+          <StatSkeleton />
+          <StatSkeleton />
+        </div>
       </>
     );
   }

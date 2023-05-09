@@ -8,7 +8,7 @@ export const Center: React.FC<
 > = ({ className, ...props }) => {
   return (
     <div
-      className={`flex items-center justify-center ${className}`}
+      className={`flex h-full items-center justify-center ${className}`}
       {...props}
     />
   );

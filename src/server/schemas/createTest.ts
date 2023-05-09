@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-const snapshotSchema = z.object({
-  charsTyped: z.number(),
-  errors: z.number(),
-  errorsDelta: z.number(),
-  time: z.number(),
-  rawWpm: z.number(),
-  wpm: z.number(),
-});
+// const snapshotSchema = z.object({
+//   charsTyped: z.number(),
+//   errors: z.number(),
+//   errorsDelta: z.number(),
+//   time: z.number(),
+//   rawWpm: z.number(),
+//   wpm: z.number(),
+// });
 
 export const createTestSchema = z.object({
   type: z.string(),

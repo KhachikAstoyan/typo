@@ -26,9 +26,11 @@ const Profile: NextPage = () => {
 
   if (isLoading) {
     return (
-      <Center>
-        <Spinner />
-      </Center>
+      <MainLayout>
+        <Center>
+          <Spinner size={20} />
+        </Center>
+      </MainLayout>
     );
   }
 
