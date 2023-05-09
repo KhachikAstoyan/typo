@@ -38,23 +38,21 @@ export const UserStats: React.FC<UserStatsProps> = ({ user }) => {
     <>
       <div className="my-5 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
         <StatCard title="Average WPM">
-          {roundToDecimal(stats.data.avg.wpm || 0, 2)}
+          {roundToDecimal(stats.avg.wpm || 0, 2)}
         </StatCard>
-        <StatCard title="Max WPM">
-          {roundToDecimal(stats.data.max.wpm!, 2)}
-        </StatCard>
+        <StatCard title="Max WPM">{roundToDecimal(stats.max.wpm!, 2)}</StatCard>
         <StatCard title="Average accuracy">
-          {roundToDecimal(stats.data.avg.accuracy || 0, 2)}
+          {roundToDecimal(stats.avg.accuracy || 0, 2)}
           <span className="text-2xl text-gray-500">%</span>
         </StatCard>
         <StatCard title="Average time">
-          {roundToDecimal((stats.data.avg.time || 0) / 1000, 2)}
+          {roundToDecimal((stats.avg.time || 0) / 1000, 2)}
           <span className="text-2xl text-gray-500">s</span>
         </StatCard>
         <StatCard title="Time spent typing">
-          {secsToReadable((stats.data.totalTime || 0) / 1000)}
+          {secsToReadable((stats.totalTime || 0) / 1000)}
         </StatCard>
-        <StatCard title="Tests Completed">{stats.data.count}</StatCard>
+        <StatCard title="Tests Completed">{stats.count}</StatCard>
       </div>
     </>
   );
